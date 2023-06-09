@@ -22,13 +22,13 @@ if ($data){
     $_SESSION['nama_pengguna'] = $data['nama_pengguna'];
 
     // mengarahkan ke halaman admin
-    header('location:adminpage/beranda.php');
+    header("Location: adminpage/beranda.php?alert=sukses");
+        exit();
 } 
 
 // uji jika username dan password tidak ditemukan/ tidak sesuai
-else{
-    echo "<script>
-            alert('Kesalahan! Harap Masukkan Username dan Password yang BENAR!');
-            document.location= 'login.php';
-        </script>";
-}
+else {
+        // Jika login gagal, redirect ke halaman login dengan pesan gagal
+        header("Location: login.php?alert=gagal");
+        exit();
+    }

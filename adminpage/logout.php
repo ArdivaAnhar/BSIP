@@ -13,6 +13,5 @@ unset($_SESSION['nama_lengkap']);
 session_destroy();
 
 echo "<script>
-            alert('Anda Telah Keluar Dari Halaman Administrasi!')
                 document.location = 'http://localhost/BSIP/index.php';
         </script>";

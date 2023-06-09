@@ -140,6 +140,42 @@ include "header.php";
         li a .img:hover {
             filter: brightness(0.1);
         }
+
+        /* side modal bantuan */
+        .modal.right .modal-dialog {
+            position: fixed;
+            margin: auto;
+            width: 320px;
+            height: 100%;
+            right: 0;
+            -webkit-transform: translate3d(100%, 0, 0);
+            -ms-transform: translate3d(100%, 0, 0);
+            -o-transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
+        }
+
+        .modal.right.show .modal-dialog {
+            -webkit-transform: translate3d(0, 0, 0);
+            -ms-transform: translate3d(0, 0, 0);
+            -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+
+        .modal.right .modal-content {
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .modal.right .modal-body {
+            padding: 15px;
+        }
+
+        .modal.right .modal-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 15px;
+        }
         </style>
 
     </head>
@@ -167,12 +203,30 @@ include "header.php";
                 <!-- Nav Item - Beranda -->
                 <li class="nav-item active">
 
-                    <!-- tanggal -->
-                    <h5 class="text-white mx-3 pt-3 text-center">
-                        <b>
-                            <span><?= date('d, M Y')?></span>
+                    <!-- kalender -->
+                    <h5 class="text-white mx-3 pt-3 text-center" id="tanggal" data-toggle="modal"
+                        data-target="#myModal">
+                        <b style="cursor: pointer;">
+                            <?= date('d, M Y')?>
                         </b>
                     </h5>
+                    <!-- Modal Kalendar -->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" style="color: red;"><b>&times;</b></span>
+                                    </button>
+                                    <iframe src="https://calendar.google.com/calendar/embed?src=YOUR_CALENDAR_ID"
+                                        style="border: 0" width="100%" height="400" frameborder="0"
+                                        scrolling="no"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end kalender -->
 
                     <a class="nav-link" href="beranda.php" title="Beranda">
                         <i class="fas fa-fw fa-home"></i>
@@ -241,36 +295,35 @@ include "header.php";
                         <!-- Topbar Navbar Bantuan -->
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link text-gray-700" href="#" onclick="Bantuan()" title="Butuh Bantuan?">
+                                <a class="nav-link text-gray-700 bantuan" id="showSideModal" data-toggle="modal"
+                                    data-target="#sideModal" title="Butuh Bantuan?" style="cursor: pointer;">
                                     <b>Bantuan</b>&nbsp;
                                     <i class="fa fa-question-circle"></i>
                                 </a>
+                                <!-- sideModal bantuan -->
                                 <form action="bantuan.php" method="post">
-                                    <div class="modal fade" id="Bantuan" tabindex="-1"
-                                        aria-labelledby="exampleModalLable" aria-hidden="true">
-                                        <div class="modal-dialog">
+                                    <div class="modal right fade" id="sideModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="sideModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title"><b>Apa Yang Dapat Kami Bantu?</b></h5>
-                                                    <button class="close" type="button" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true" style="color: red"><b>×</b></span>
-                                                    </button>
+                                                    <h5 class="modal-title text-gray-800" id="sideModalLabel">Apa
+                                                        masalah anda?</h5>
                                                 </div>
-                                                <div class="modal-body text-right">
-                                                    <input type="text" name="nama" class="form-control"
-                                                        placeholder="Masukkan nama anda..." required>
-                                                    <input type="email" name="email" class="form-control mt-3"
-                                                        placeholder="Masukkan alamat email anda..." required>
-                                                    <input type="text" name="telp" class="form-control mt-3"
-                                                        placeholder="Masukkan nomor telpon anda..." required>
-                                                    <textarea class="form-control mt-3" name="pesan" rows="2"
-                                                        placeholder="Apa Masalah Anda?" required></textarea>
-                                                    <button class="btn btn-secondary mt-3" type="button"
-                                                        data-dismiss="modal">
-                                                        <i class="fas fa-fw fa-times"></i>
-                                                        Batal</button>
-                                                    <button type="submit" name="bsubmit" class="btn btn-primary mt-3"
+                                                <div class="modal-body">
+                                                    <input type="text" name="nama" class="form-control pt-4 pb-4"
+                                                        placeholder="Masukkan nama..." required>
+                                                    <input type="email" name="email" class="form-control mt-3 pt-4 pb-4"
+                                                        placeholder="Masukkan alamat email..." required>
+                                                    <input type="text" name="telp" class="form-control mt-3 pt-4 pb-4"
+                                                        placeholder="Masukkan nomor telpon..." required>
+                                                    <textarea class="form-control mt-3" name="pesan" rows="3"
+                                                        placeholder="Ketik pesan!" required></textarea>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Tutup</button>
+                                                    <button type="submit" name="bsubmit" class="btn btn-primary"
                                                         title="Kirim data yang telah anda isi"><i
                                                             class="fa fa-paper-plane">
                                                         </i> Kirim</button>
@@ -342,37 +395,23 @@ include "header.php";
                     </div>
                     <!-- /.container-fluid -->
 
-                    <div class="card-body ml-3 mr-4 pb-5">
-                        <h2 class="text-gray-800"><b>Badan Standardisasi Instrument Pertanian (BSIP)</b></h2>
-                        <p>
+                    <div class="card-body ml-3 mr-4">
+                        <h2 class="text-gray-800"><b>Badan Standardisasi Instrumen Pertanian (BSIP)</b></h2>
+                        <h5 class="text-primary ml-2"><b>Sejarah</b> (Singkat)</h5>
+                        <p class="col-md-7">
                             <i>
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae aliquid voluptatem
-                                dolore
-                                expedita delectus labore nemo rem laudantium possimus quibusdam deleniti ab
-                                assumenda
-                                adipisci fugit illum quis inventore ex aspernatur nam culpa similique, blanditiis
-                                neque
-                                velit? Minus, voluptates. At error corrupti quos iusto dolor voluptate totam numquam
-                                explicabo. Assumenda obcaecati eligendi repellendus nihil perspiciatis
-                                necessitatibus
-                                sint
-                                debitis, quas excepturi ducimus esse consequatur laudantium architecto deserunt
-                                inventore
-                                dolor a corporis eaque? Voluptate autem neque adipisci velit nulla porro possimus,
-                                magnam
-                                quod deserunt dolorum facilis sunt unde veritatis eos nobis eius soluta doloremque
-                                ipsam
-                                dolor maxime tenetur quas dolores. Magni autem ad similique modi quibusdam, est
-                                dignissimos
-                                dolore repellat quasi officia quae nemo natus fugiat tempora cum vel veniam beatae
-                                nisi.
+                                Pembangunan pertanian memerlukan sebuah standar instrumen pertanian demi menjamin mutu
+                                dari proses dan produk hasil pertanian. Badan Standardisasi Instrumen Pertanian (BSIP)
+                                lahir pada 21 September 2022 melalui Peraturan Presiden Nomor 117 Tahun 2022 yang
+                                memiliki tugas menyelenggarakan koordinasi, perumusan, penerapan, dan pemeliharaan,
+                                serta harmonisasi standar instrumen pertanian.
                             </i>
                         </p>
                     </div>
 
                     <div class="pt-5">
                         <!-- Layanan -->
-                        <h2 class="text-center mt-5 text-gray-700"><b>Layanan</b></h2>
+                        <h2 class="text-center mt-5 mb-3 text-gray-700"><b>Layanan Kami</b></h2>
 
                         <!-- lisensi -->
                         <div class="row justify-content-center">
@@ -381,7 +420,7 @@ include "header.php";
                                     <div class="card-body">
                                         <div class="row no-gutters justify-content-center mb-2">
                                             <a href="#dsc" data-toggle="popover" title="Lisensi"
-                                                data-content="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut, excepturi maiores modi natus officiis obcaecati.">
+                                                data-content="Izin yang diberikan oleh pemilik Merek terdaftar kepada pihak lain berdasarkan perjanjian secara tertulis sesuai peraturan perundang-undangan untuk menggunakan Merek terdaftar.">
                                                 <i class="fas fa-briefcase fa-3x text-gray-300"></i>
                                             </a>
                                         </div>
@@ -396,7 +435,7 @@ include "header.php";
                                     <div class="card-body">
                                         <div class="row no-gutters justify-content-center mb-2">
                                             <a href="#dsc" data-toggle="popover" title="Pra Lisensi"
-                                                data-content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, quia.Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut, excepturi maiores modi natus officiis obcaecati.">
+                                                data-content="Pra lisensi menjadi salah satu upaya akselerasi alih teknologi yang menjadi amanah Balitbangtan.">
                                                 <i class="fas fa-envelope fa-3x text-gray-300"></i>
                                             </a>
                                         </div>
@@ -411,7 +450,7 @@ include "header.php";
                                     <div class="card-body">
                                         <div class="row no-gutters justify-content-center mb-2">
                                             <a href="#dsc" data-toggle="popover" title="HKI"
-                                                data-content="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat dicta voluptatem ut ipsam quaerat?">
+                                                data-content="Hak kekayaan intelektual (HKI) didefinisikan sebagai hak untuk memperoleh perlindungan secara hukum atas kekayaan intelektual sesuai dengan peraturan perundang-undangan di bidang HKI, seperti UU Hak Cipta, Paten, Desain Industri, Rahasia Dagang, Varitas Tanaman, Sirkuit terpadu dan Merek serta telah disahkan oleh ITB melalui penerbitan SK Rektor Ketentuan Insentif Kekayaan Intelektual Institut Teknologi Bandung Nomor 643/I1.B04/SK-WRRIM/XI/2018.">
                                                 <i class="fas fa-mail-bulk fa-3x text-gray-300"></i>
                                             </a>
                                         </div>
@@ -428,7 +467,7 @@ include "header.php";
                                     <div class="card-body">
                                         <div class="row no-gutters justify-content-center mb-2">
                                             <a href="#dsc" data-toggle="popover" title="Promosi"
-                                                data-content="Lorem, ipsum dolor sit amet consectetur adipisicing elit.">
+                                                data-content="Promosi atau promotion adalah cara untuk meningkatkan penjualan produk atau jasa yang biasanya dilakukan melalui iklan atau pemotongan harga, seperti diungkap Investopedia.">
                                                 <i class="fas fa-hand-holding fa-3x text-gray-300"></i>
                                             </a>
                                         </div>
@@ -443,7 +482,7 @@ include "header.php";
                                     <div class="card-body">
                                         <div class="row no-gutters justify-content-center mb-2">
                                             <a href="#dsc" data-toggle="popover" title="Inkubator"
-                                                data-content="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi adipisci et, eius ad tenetur magni id deleniti?">
+                                                data-content="Inkubator merupakan sebuah perangkat tertutup yang dapat mengoptimalkan suhu dan kelembapan agar organisme sel dapat berkembang dengan baik. ">
                                                 <i class="fas fa-barcode fa-3x text-gray-300"></i>
                                             </a>
                                         </div>
@@ -458,7 +497,7 @@ include "header.php";
                                     <div class="card-body">
                                         <div class="row no-gutters justify-content-center mb-2">
                                             <a href="#dsc" data-toggle="popover" title="Jurnal / Warta Litbang"
-                                                data-content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea rem consequatur consequuntur alias atque. Quas dolores molestiae asperiores, quos quod possimus reprehenderit.">
+                                                data-content="Warta Penelitian Perhubungan merupakan jurnal yang diterbitkan oleh Sekretariat Badan Litbang Perhubungan. Kontributor Warta Penelitian Perhubungan berasal dari kalangan Peneliti dan Akademisi di bidang transportasi.">
                                                 <i class="fas fa-book-reader fa-3x text-gray-300"></i>
                                             </a>
                                         </div>
@@ -475,7 +514,7 @@ include "header.php";
                                     <div class="card-body">
                                         <div class="row no-gutters justify-content-center mb-2">
                                             <a href="#dsc" data-toggle="popover" title="Administrasi (Tata Usaha)"
-                                                data-content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat ut animi doloribus soluta nesciunt minima eaque enim voluptates aperiam!">
+                                                data-content="Administrasi merupakan salah satu bentuk usaha dan aktivitas yang berhubungan dengan pengaturan kebijakan agar dapat mencapai target maupun tujuan organisasi.">
                                                 <i class="fas fa-tty fa-3x text-gray-300"></i>
                                             </a>
                                         </div>
@@ -490,7 +529,7 @@ include "header.php";
                                     <div class="card-body">
                                         <div class="row no-gutters justify-content-center mb-2">
                                             <a href="#dsc" data-toggle="popover" title="Informasi"
-                                                data-content="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Porro, libero consectetur.">
+                                                data-content="Informasi adalah keterangan, pernyataan, gagasan, dan tanda-tanda yang mengandung nilai, makna, dan pesan, baik data, fakta maupun penjelasannya yang dapat dilihat, didengar, dan dibaca.">
                                                 <i class="fas fa-info-circle fa-3x text-gray-300"></i>
                                             </a>
                                         </div>
@@ -505,7 +544,7 @@ include "header.php";
                                     <div class="card-body">
                                         <div class="row no-gutters justify-content-center mb-2">
                                             <a href="#dsc" data-toggle="popover" title="Perpustakaan"
-                                                data-content="Lorem ipsum dolor sit amet consectetur.">
+                                                data-content="Perpustakaan adalah institusi yang mengumpulkan pengetahuan tercetak dan terekam, mengelolanya dengan cara khusus guna memenuhi kebutuhan intelektualitas para penggunanya melalui beragam cara interaksi pengetahuan.">
                                                 <i class="fas fa-book-open fa-3x text-gray-300"></i>
                                             </a>
                                         </div>
@@ -640,10 +679,6 @@ include "header.php";
 
         function Perpustakaan() {
             $('#Perpustakaan').modal('show');
-        }
-
-        function Bantuan() {
-            $('#Bantuan').modal('show');
         }
 
         $(function() {

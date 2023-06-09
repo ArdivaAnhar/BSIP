@@ -67,6 +67,42 @@ include "koneksi-kontak.php";
         footer .row .yt:hover {
             filter: brightness(0.8);
         }
+
+        /* side modal bantuan */
+        .modal.right .modal-dialog {
+            position: fixed;
+            margin: auto;
+            width: 320px;
+            height: 100%;
+            right: 0;
+            -webkit-transform: translate3d(100%, 0, 0);
+            -ms-transform: translate3d(100%, 0, 0);
+            -o-transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
+        }
+
+        .modal.right.show .modal-dialog {
+            -webkit-transform: translate3d(0, 0, 0);
+            -ms-transform: translate3d(0, 0, 0);
+            -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+
+        .modal.right .modal-content {
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .modal.right .modal-body {
+            padding: 15px;
+        }
+
+        .modal.right .modal-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 15px;
+        }
         </style>
     </head>
 
@@ -93,12 +129,30 @@ include "koneksi-kontak.php";
                 <!-- Nav Item - Beranda -->
                 <li class="nav-item">
 
-                    <!-- tanggal -->
-                    <h5 class="text-white mx-3 pt-3 text-center">
-                        <b>
-                            <span><?= date('d, M Y')?></span>
+                    <!-- kalender -->
+                    <h5 class="text-white mx-3 pt-3 text-center" id="tanggal" data-toggle="modal"
+                        data-target="#myModal">
+                        <b style="cursor: pointer;">
+                            <?= date('d, M Y')?>
                         </b>
                     </h5>
+                    <!-- Modal Kalendar -->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" style="color: red;"><b>&times;</b></span>
+                                    </button>
+                                    <iframe src="https://calendar.google.com/calendar/embed?src=YOUR_CALENDAR_ID"
+                                        style="border: 0" width="100%" height="400" frameborder="0"
+                                        scrolling="no"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end kalender -->
 
                     <a class="nav-link" href="http://localhost/BSIP/" title="Beranda">
                         <i class="fas fa-fw fa-home"></i>
@@ -185,36 +239,35 @@ include "koneksi-kontak.php";
                         <!-- Topbar Navbar Bantuan -->
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link text-gray-700" href="#" onclick="Bantuan()" title="Butuh Bantuan?">
+                                <a class="nav-link text-gray-700 bantuan" id="showSideModal" data-toggle="modal"
+                                    data-target="#sideModal" title="Butuh Bantuan?" style="cursor: pointer;">
                                     <b>Bantuan</b>&nbsp;
                                     <i class="fa fa-question-circle"></i>
                                 </a>
+                                <!-- sideModal bantuan -->
                                 <form action="http://localhost/BSIP/bantuan.php" method="post">
-                                    <div class="modal fade" id="Bantuan" tabindex="-1"
-                                        aria-labelledby="exampleModalLable" aria-hidden="true">
-                                        <div class="modal-dialog">
+                                    <div class="modal right fade" id="sideModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="sideModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title"><b>Apa Yang Dapat Kami Bantu?</b></h5>
-                                                    <button class="close" type="button" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true" style="color: red"><b>×</b></span>
-                                                    </button>
+                                                    <h5 class="modal-title text-gray-800" id="sideModalLabel">Apa
+                                                        masalah anda?</h5>
                                                 </div>
-                                                <div class="modal-body text-right">
-                                                    <input type="text" name="nama" class="form-control"
-                                                        placeholder="Masukkan nama anda..." required>
-                                                    <input type="email" name="email" class="form-control mt-3"
-                                                        placeholder="Masukkan alamat email anda..." required>
-                                                    <input type="text" name="telp" class="form-control mt-3"
-                                                        placeholder="Masukkan nomor telpon anda..." required>
-                                                    <textarea class="form-control mt-3" name="pesan" rows="2"
-                                                        placeholder="Apa Masalah Anda?" required></textarea>
-                                                    <button class="btn btn-secondary mt-3" type="button"
-                                                        data-dismiss="modal">
-                                                        <i class="fas fa-fw fa-times"></i>
-                                                        Batal</button>
-                                                    <button type="submit" name="bsubmit" class="btn btn-primary mt-3"
+                                                <div class="modal-body">
+                                                    <input type="text" name="nama" class="form-control pt-4 pb-4"
+                                                        placeholder="Masukkan nama..." required>
+                                                    <input type="email" name="email" class="form-control mt-3 pt-4 pb-4"
+                                                        placeholder="Masukkan alamat email..." required>
+                                                    <input type="text" name="telp" class="form-control mt-3 pt-4 pb-4"
+                                                        placeholder="Masukkan nomor telpon..." required>
+                                                    <textarea class="form-control mt-3" name="pesan" rows="3"
+                                                        placeholder="Ketik pesan!" required></textarea>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Tutup</button>
+                                                    <button type="submit" name="bsubmit" class="btn btn-primary"
                                                         title="Kirim data yang telah anda isi"><i
                                                             class="fa fa-paper-plane">
                                                         </i> Kirim</button>
@@ -224,6 +277,7 @@ include "koneksi-kontak.php";
                                     </div>
                                 </form>
                             </li>
+
 
 
                             <div class="topbar-divider d-none d-sm-block"></div>
@@ -263,16 +317,15 @@ if (isset($_POST['bkirim'])) {
 
     // Uji JIka Simpan Data Sukses
     if ($kirim) {
-        echo "<script>
-        alert('Data Berhasil DiKirim..!');
-        document.location='?'
-        </script>";
-    } else {
-        echo "<script>
-        alert('Data Gagal Dikirim..!');
-        document.location='?'
-        </script>";
-    }
+        echo "<meta http-equiv=refresh content=2;URL='kontak.php?alert=sukses'";
+        } 
+
+        // uji jika username dan password tidak ditemukan/ tidak sesuai
+        else {
+        // Jika login gagal, redirect ke halaman login dengan pesan gagal
+        header("Location: kontak.php?alert=gagal");
+        exit();
+        }
 }
 
 ?>
@@ -289,6 +342,19 @@ if (isset($_POST['bkirim'])) {
                             <!-- form kontak -->
                             <form class="user col-md-4 text-center" method="POST">
                                 <h4 class="text-gray-800">Hubungi Kami!</h4>
+                                <?php
+                                    // Periksa apakah ada pesan alert
+                                    if (isset($_GET['alert'])) {
+                                        $alert = $_GET['alert'];
+                                        if ($alert == "gagal") {
+                                        echo '<div class="alert alert-danger shadow" role="alert">Simpan data gagal!</div>';
+                                        } elseif ($alert == "sukses") {
+                                        echo '<div class="alert alert-success shadow" role="alert">Simpan data sukses! <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true"><b>&times;</b></span>
+                                    </button></div>';
+                                    }
+                                }
+                            ?>
                                 <div class="form-control-group ml-3 mr-3">
                                     <input type="text" name="nama" class="form-control" placeholder="Nama" required>
                                 </div>
@@ -300,7 +366,7 @@ if (isset($_POST['bkirim'])) {
                                     <input type="text" name="telp" class="form-control" placeholder="No.Telp" required>
                                 </div>
                                 <div class="form-group mx-3">
-                                    <textarea class="form-control" name="pesan" rows="3" placeholder="Ketik Pesan"
+                                    <textarea class="form-control" name="pesan" rows="3" placeholder="Ketik Pesan!"
                                         required></textarea>
                                 </div>
 
@@ -401,12 +467,6 @@ if (isset($_POST['bkirim'])) {
         <script src="js/demo/chart-area-demo.js"></script>
         <script src="js/demo/chart-pie-demo.js"></script>
 
-        <!-- Bantuan -->
-        <script>
-        function Bantuan() {
-            $('#Bantuan').modal('show');
-        }
-        </script>
     </body>
 
 </html>

@@ -13,7 +13,7 @@ empty($_SESSION['password']) or
 empty($_SESSION['nama_pengguna'])){
     echo "<script>
             alert('Kesalahan! Untuk Mengakses Halaman ini anda Harus Login Terlebih Dahulu!');
-            document.location = 'http://localhost/project/login.php';
+            document.location = 'http://localhost/BSIP/login.php';
         </script>";
 }
 

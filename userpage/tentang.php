@@ -79,14 +79,55 @@
             filter: brightness(0.7);
         }
 
-        .row .col-md-7 h4,
         .section-heading,
-        .col-md-3 h4 {
+        .col-md-3 h4,
+        .container-fluid h2 {
             font-family: 'Times New Roman', Times, serif;
         }
 
         .prf {
             padding-top: 55px;
+        }
+
+        .col-md-5 a img,
+        .button {
+            cursor: zoom-in;
+        }
+
+        /* side modal bantuan */
+        .modal.right .modal-dialog {
+            position: fixed;
+            margin: auto;
+            width: 320px;
+            height: 100%;
+            right: 0;
+            -webkit-transform: translate3d(100%, 0, 0);
+            -ms-transform: translate3d(100%, 0, 0);
+            -o-transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
+        }
+
+        .modal.right.show .modal-dialog {
+            -webkit-transform: translate3d(0, 0, 0);
+            -ms-transform: translate3d(0, 0, 0);
+            -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+
+        .modal.right .modal-content {
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .modal.right .modal-body {
+            padding: 15px;
+        }
+
+        .modal.right .modal-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 15px;
         }
         </style>
     </head>
@@ -114,12 +155,30 @@
                 <!-- Nav Item - Beranda -->
                 <li class="nav-item">
 
-                    <!-- tanggal -->
-                    <h5 class="text-white mx-3 pt-3 text-center">
-                        <b>
-                            <span><?= date('d, M Y') ?></span>
+                    <!-- kalender -->
+                    <h5 class="text-white mx-3 pt-3 text-center" id="tanggal" data-toggle="modal"
+                        data-target="#myModal">
+                        <b style="cursor: pointer;">
+                            <?= date('d, M Y')?>
                         </b>
                     </h5>
+                    <!-- Modal Kalendar -->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" style="color: red;"><b>&times;</b></span>
+                                    </button>
+                                    <iframe src="https://calendar.google.com/calendar/embed?src=YOUR_CALENDAR_ID"
+                                        style="border: 0" width="100%" height="400" frameborder="0"
+                                        scrolling="no"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end kalender -->
 
                     <a class="nav-link" href="http://localhost/BSIP/" title="Beranda">
                         <i class="fas fa-fw fa-home"></i>
@@ -206,36 +265,35 @@
                         <!-- Topbar Navbar Bantuan -->
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link text-gray-700" href="#" onclick="Bantuan()" title="Butuh Bantuan?">
+                                <a class="nav-link text-gray-700 bantuan" id="showSideModal" data-toggle="modal"
+                                    data-target="#sideModal" title="Butuh Bantuan?" style="cursor: pointer;">
                                     <b>Bantuan</b>&nbsp;
                                     <i class="fa fa-question-circle"></i>
                                 </a>
+                                <!-- sideModal bantuan -->
                                 <form action="http://localhost/BSIP/bantuan.php" method="post">
-                                    <div class="modal fade" id="Bantuan" tabindex="-1"
-                                        aria-labelledby="exampleModalLable" aria-hidden="true">
-                                        <div class="modal-dialog">
+                                    <div class="modal right fade" id="sideModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="sideModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title"><b>Apa Yang Dapat Kami Bantu?</b></h5>
-                                                    <button class="close" type="button" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true" style="color: red"><b>×</b></span>
-                                                    </button>
+                                                    <h5 class="modal-title text-gray-800" id="sideModalLabel">Apa
+                                                        masalah anda?</h5>
                                                 </div>
-                                                <div class="modal-body text-right">
-                                                    <input type="text" name="nama" class="form-control"
-                                                        placeholder="Masukkan nama anda..." required>
-                                                    <input type="email" name="email" class="form-control mt-3"
-                                                        placeholder="Masukkan alamat email anda..." required>
-                                                    <input type="text" name="telp" class="form-control mt-3"
-                                                        placeholder="Masukkan nomor telpon anda..." required>
-                                                    <textarea class="form-control mt-3" name="pesan" rows="2"
-                                                        placeholder="Apa Masalah Anda?" required></textarea>
-                                                    <button class="btn btn-secondary mt-3" type="button"
-                                                        data-dismiss="modal">
-                                                        <i class="fas fa-fw fa-times"></i>
-                                                        Batal</button>
-                                                    <button type="submit" name="bsubmit" class="btn btn-primary mt-3"
+                                                <div class="modal-body">
+                                                    <input type="text" name="nama" class="form-control pt-4 pb-4"
+                                                        placeholder="Masukkan nama..." required>
+                                                    <input type="email" name="email" class="form-control mt-3 pt-4 pb-4"
+                                                        placeholder="Masukkan alamat email..." required>
+                                                    <input type="text" name="telp" class="form-control mt-3 pt-4 pb-4"
+                                                        placeholder="Masukkan nomor telpon..." required>
+                                                    <textarea class="form-control mt-3" name="pesan" rows="3"
+                                                        placeholder="Ketik pesan!" required></textarea>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Tutup</button>
+                                                    <button type="submit" name="bsubmit" class="btn btn-primary"
                                                         title="Kirim data yang telah anda isi"><i
                                                             class="fa fa-paper-plane">
                                                         </i> Kirim</button>
@@ -268,40 +326,57 @@
 
                         <!-- Page Heading -->
                         <!-- profile ketua balai -->
-                        <h2 class="text-gray-700 mt-5">Ir. Ketut Widarsono</h2>
+                        <h2 class="text-gray-700 mt-5">Dr. Ir. I Ketut Gede Mudiarta, M.Si</h2>
                         <div class="row">
 
-                            <div class="col-md-5">
+                            <div class="col-md-5 mb-5">
                                 <a href="#ketua" onclick="Ketua()">
                                     <img src="img/ketua.jpeg" height="650" class="shadow-lg">
                                 </a>
                                 <div class="modal fade" id="Ketua" tabindex="-1" aria-labelledby="exampleModalLable"
                                     aria-hidden="true">
+                                    <button class="close mr-5 mt-3" type="button" data-dismiss="modal"
+                                        aria-label="Close">
+                                        <span aria-hidden="true" style="color: white;"><b class="h1">×</b></span>
+                                    </button>
                                     <div class="modal-dialog">
                                         <div class="modal-body text-center">
-                                            <img src="img/ketua.jpeg" width="400">
+                                            <img src="img/ketua.jpeg" width="400" cl>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-7 text-gray-800 mb-5">
+                            <div class="col-md-7 text-gray-800 mb-5 mt-3">
                                 <b>
                                     <h4>
-                                        Biografi: Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia aut
-                                        dignissimos odio sit tempore id repellat provident, nihil qui tenetur. Delectus
-                                        facere adipisci ipsum natus explicabo, molestias quasi commodi voluptatum, velit
-                                        vel quas, maxime dignissimos libero repudiandae modi nemo alias. Vel sint omnis
-                                        fuga est ipsam. Placeat libero, laudantium eum quis commodi atque officiis eaque
-                                        beatae. Est aliquam magni mollitia placeat ab exercitationem officiis impedit
-                                        doloribus ullam in repudiandae, unde quibusdam fugiat alias aperiam a!
-                                        Praesentium, optio dolores. Amet pariatur ducimus eaque. Veniam, fuga at atque
-                                        quas culpa voluptatum debitis libero nobis consequuntur officiis, eveniet
-                                        corrupti possimus corporis dolor maiores aperiam eos ab velit quia tenetur. Qui,
-                                        quos quisquam, vero accusantium ratione nobis iure exercitationem magni velit
-                                        optio ipsum corrupti incidunt. Ducimus dolorum totam cumque praesentium, commodi
-                                        quod voluptatem ad! Qui accusantium consequatur maiores at. Aliquam enim quam
-                                        sit sint?
+                                        <i>
+                                            Biografi: Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia
+                                            aut
+                                            dignissimos odio sit tempore id repellat provident, nihil qui tenetur.
+                                            Delectus
+                                            facere adipisci ipsum natus explicabo, molestias quasi commodi voluptatum,
+                                            velit
+                                            vel quas, maxime dignissimos libero repudiandae modi nemo alias. Vel sint
+                                            omnis
+                                            fuga est ipsam. Placeat libero, laudantium eum quis commodi atque officiis
+                                            eaque
+                                            beatae. Est aliquam magni mollitia placeat ab exercitationem officiis
+                                            impedit
+                                            doloribus ullam in repudiandae, unde quibusdam fugiat alias aperiam a!
+                                            Praesentium, optio dolores. Amet pariatur ducimus eaque. Veniam, fuga at
+                                            atque
+                                            quas culpa voluptatum debitis libero nobis consequuntur officiis, eveniet
+                                            corrupti possimus corporis dolor maiores aperiam eos ab velit quia tenetur.
+                                            Qui,
+                                            quos quisquam, vero accusantium ratione nobis iure exercitationem magni
+                                            velit
+                                            optio ipsum corrupti incidunt. Ducimus dolorum totam cumque praesentium,
+                                            commodi
+                                            quod voluptatem ad! Qui accusantium consequatur maiores at. Aliquam enim
+                                            quam
+                                            sit sint?
+                                        </i>
                                     </h4>
                                 </b>
                             </div>
@@ -309,17 +384,17 @@
 
                         <!-- petinggi -->
                         <h2 class="section-heading text-uppercase text-center mt-5 mb-4 text-gray-800"><b>
-                                Top 3 Petinggi Kami</b></h2>
+                                Struktur Organisasi</b></h2>
                         <div class="row justify-content-center text-center">
 
                             <!-- Profil 1 -->
                             <div class="col-md-3 mr-5 mb-5 mt-5">
                                 <span class="bulat">
                                     <a href="#profil" onclick="Image1()">
-                                        <img class="image hover shadow-lg"
-                                            src="https://images.bisnis.com/posts/2022/12/21/1610680/elon-musk.jpg"></a>
-                                    <h4 class="mt-2 text-gray-800"><b>Mas Elon</b></h4>
-                                    <h6>Slave</h6>
+                                        <img class="image hover shadow-lg" src="img/bpatp1.jpg"></a>
+                                    <h4 class="mt-2 text-gray-800"><b>Kania Tresnawati, S.T.P</b></h4>
+                                    <h6>Subkoordinator Pelayanan Alih
+                                        Teknologi</h6>
 
                                     <div class="modal fade prf" id="Image1" tabindex="-1"
                                         aria-labelledby="exampleModalLable" aria-hidden="true">
@@ -331,10 +406,10 @@
                                                         <span aria-hidden="true" style="color: red"><b>×</b></span>
                                                     </button>
                                                     <span class="bulat">
-                                                        <img class="image mt-4"
-                                                            src="https://images.bisnis.com/posts/2022/12/21/1610680/elon-musk.jpg">
+                                                        <img class="image mt-4" src="img/bpatp1.jpg">
                                                         <h4 class="mt-2 text-gray-800"><b>Mas Elon</b></h4>
-                                                        <h5 class="text-gray-900">Slave</h5>
+                                                        <h5 class="text-gray-700">Subkoordinator Pelayanan Alih
+                                                            Teknologi</h5>
                                                         <p><i>Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                                                 Hic consequatur perspiciatis, voluptatum quam nesciunt
                                                                 mollitia placeat eius accusamus quidem voluptates!</i>
@@ -382,10 +457,10 @@
                                 <span class="bulat">
                                     <a href="#profil" onclick="Image2()">
                                         <img class="image hover shadow-lg"
-                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJc0UIxhr2CaBKglWfMEof1ruvTHYqS7PKvw&usqp=CAU">
+                                            src="img/struktur organisasi bpatp 2022 oke.jpg">
                                     </a>
-                                    <h4 class="mt-2 text-gray-800"><b>John Cena</b></h4>
-                                    <h6>Leader</h6>
+                                    <h4 class="mt-2 text-gray-800"><b>Dr. Ir. I Ketut Gede Mudiarta, M.Si</b></h4>
+                                    <h6>Ketua Balai</h6>
                                     <div class="modal fade prf" id="Image2" tabindex="-1"
                                         aria-labelledby="exampleModalLable" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -397,9 +472,10 @@
                                                     </button>
                                                     <span class="bulat">
                                                         <img class="image mt-4"
-                                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJc0UIxhr2CaBKglWfMEof1ruvTHYqS7PKvw&usqp=CAU">
-                                                        <h4 class="mt-2 text-gray-800"><b>John Cena</b></h4>
-                                                        <h5 class="text-gray-900">Leader</h5>
+                                                            src="img/struktur organisasi bpatp 2022 oke.jpg">
+                                                        <h4 class="mt-2 text-gray-800"><b>Dr. Ir. I Ketut Gede Mudiarta,
+                                                                M.Si</b></h4>
+                                                        <h5 class="text-gray-700">Ketua Balai</h5>
                                                         <p><i>Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                                                 Hic consequatur perspiciatis, voluptatum quam nesciunt
                                                                 mollitia placeat eius accusamus quidem voluptates!</i>
@@ -445,11 +521,10 @@
                             <div class="col-md-3 ml-5 mb-5 mt-5">
                                 <span class="bulat">
                                     <a href="#profil" onclick="Image3()">
-                                        <img class="image hover shadow-lg"
-                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCVilS_aA9IUwW74hL8gANyYAqYy0psVOjyw&usqp=CAU">
+                                        <img class="image hover shadow-lg" src="img/struktur organisasi bpatp 2022.jpg">
                                     </a>
-                                    <h4 class="mt-2 text-gray-800"><b>The Goat</b></h4>
-                                    <h6>Slave</h6>
+                                    <h4 class="mt-2 text-gray-800"><b>Yadi Rusyadi, S.Si M.Si</b></h4>
+                                    <h6>Kepala Sub Bagian Tata Usaha</h6>
                                     <div class="modal fade prf" id="Image3" tabindex="-1"
                                         aria-labelledby="exampleModalLable" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -461,9 +536,10 @@
                                                     </button>
                                                     <span class="bulat">
                                                         <img class="image mt-4"
-                                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCVilS_aA9IUwW74hL8gANyYAqYy0psVOjyw&usqp=CAU">
-                                                        <h4 class="mt-2 text-gray-800"><b>The Goat</b></h4>
-                                                        <h5 class="text-gray-900">Slave</h5>
+                                                            src="img/struktur organisasi bpatp 2022.jpg">
+                                                        <h4 class="mt-2 text-gray-800"><b>Yadi Rusyadi, S.Si M.Si</b>
+                                                        </h4>
+                                                        <h5 class="text-gray-700">Kepala Sub Bagian Tata Usaha</h5>
                                                         <p><i>Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                                                 Hic consequatur perspiciatis, voluptatum quam nesciunt
                                                                 mollitia placeat eius accusamus quidem voluptates!</i>
@@ -510,37 +586,48 @@
                         <h2 class="text-gray-800 mb-4 mt-5">Badan Standardisasi Instrumen Pertanian (BSIP)</h2>
                         <div class="bg-light row">
                             <div class="col-md-6">
-                                <h5 class="text-primary"><b>Sejarah</b> (Singkat)</h5>
-                                <p><i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus ratione
-                                        nesciunt aliquam et, nam eum. Amet blanditiis molestiae iste accusamus? Vero
-                                        nemo
-                                        ipsa atque, unde aperiam placeat nisi quod dolor maxime ab voluptate?
-                                        Dignissimos
-                                        laudantium tenetur vitae excepturi ea nihil impedit, iste, quos tempora expedita
-                                        voluptatum cum delectus natus. Debitis incidunt nam facere possimus mollitia
-                                        officia
-                                        vitae. Laboriosam, sunt quae. Veritatis sapiente natus harum autem dolorem sint,
-                                        earum eum corrupti officiis eaque laboriosam incidunt quaerat unde, temporibus
-                                        voluptates recusandae? Obcaecati at quasi repudiandae quod exercitationem
-                                        voluptate
-                                        enim, iusto laudantium alias. Aperiam perferendis voluptatibus, saepe
-                                        dignissimos
-                                        aliquid laborum, quod sed, ducimus tempore autem tempora dolores assumenda
-                                        reiciendis cupiditate asperiores quo veniam fuga est nostrum alias rem optio
-                                        officia. Voluptates ipsum nihil dolor veritatis nesciunt nobis, magni
-                                        repudiandae
-                                        eaque labore maiores aliquam veniam excepturi aperiam blanditiis ullam neque
-                                        dignissimos? Officia, provident corrupti consequuntur repellat quaerat
-                                        recusandae
-                                        eius in dolorem deserunt, aperiam voluptatum?</i></p>
+                                <h5 class="text-primary">Organisasi</h5>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pembangunan pertanian memerlukan
+                                    sebuah standar
+                                    instrumen
+                                    pertanian demi
+                                    menjamin mutu dari proses dan produk hasil pertanian. Badan Standardisasi
+                                    Instrumen Pertanian (BSIP) lahir pada 21 September 2022 melalui Peraturan
+                                    Presiden Nomor 117 Tahun 2022 yang memiliki tugas menyelenggarakan koordinasi,
+                                    perumusan, penerapan, dan pemeliharaan, serta harmonisasi standar instrumen
+                                    pertanian.
+
+                                <p>
+                                    Dalam melaksanakan tugas tersebut, Badan Standardisasi Instrumen Pertanian
+                                    menyelenggarakan fungsi:
+                                </p>
+
+                                <p>
+                                    1. Penyusunan kebijakan teknis perencanaan dan program, perumusan,
+                                    penerapan, dan pemeliharaan, serta harmonisasi standar instrumen pertanian;
+                                    <br>
+                                    2. Pelaksanaan koordinasi, perumusan, penerapan, dan pemeliharaan serta
+                                    harmonisasi standar instrumen pertanian;
+                                    <br>
+                                    3. Pemantauan, evaluasi dan pelaporan pelaksanaan koordinasi, perumusan,
+                                    penerapan, dan pemeliharaan serta harmonisasi standar instrumen pertanian;
+                                    <br>
+                                    4. Pelaksanaan tugas administrasi Badan Standardisasi Instrumen Pertanian;
+                                    dan pelaksanaan fungsi lain yang diberikan oleh Menteri.
+                                </p>
+                                </p>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6 mt-4">
                                 <a href="#bsip" onclick="BSIP()">
-                                    <img src="img/BPATP.jpeg" class="shadow-lg">
+                                    <img src="img/BPATP.jpeg" class="button shadow-lg">
                                 </a>
                                 <div class="modal fade prf" id="BSIP" tabindex="-1" aria-labelledby="exampleModalLable"
                                     aria-hidden="true">
+                                    <button class="close mr-5 mt-3" type="button" data-dismiss="modal"
+                                        aria-label="Close">
+                                        <span aria-hidden="true" style="color: white;"><b class="h1">×</b></span>
+                                    </button>
                                     <div class="modal-dialog">
                                         <div class="modal-body text-center">
                                             <img src="img/BPATP.jpeg">
@@ -554,38 +641,21 @@
                         <div class="row mt-5">
                             <div class="col-md-6">
                                 <h3>Visi</h3>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam assumenda dicta
-                                    vitae doloremque asperiores officia dolores veritatis minima expedita, ipsum
-                                    quisquam alias necessitatibus repellat voluptatem, porro perferendis odio et
-                                    deserunt ducimus pariatur. Odio, incidunt explicabo. Sunt in adipisci velit mollitia
-                                    sequi asperiores quod, minus molestias earum. Eos error laboriosam dolorum? Ex
-                                    deserunt odit voluptate facere, quas architecto ad assumenda cumque impedit dolore
-                                    ipsum! Labore placeat nulla consectetur expedita dolor, iure suscipit corrupti.
-                                    Debitis eos consectetur voluptate ducimus rerum, sit totam nihil voluptates
-                                    deleniti, ipsam ratione modi sed asperiores corporis sint iure perspiciatis magni
-                                    dignissimos temporibus odio quis facilis in fuga. Aliquam, enim fuga ab tempore
-                                    atque quae. Natus quas illum perspiciatis. Tempore, excepturi nulla reprehenderit
-                                    omnis magni earum molestias officia voluptas delectus ab provident? Placeat
-                                    inventore dolor debitis, rem illo, iusto facere, accusantium blanditiis nesciunt
-                                    quidem reprehenderit error. Earum tempore et dolorem accusantium tenetur sint
-                                    provident similique doloribus accusamus veritatis.</p>
+                                <p>“Pertanian yang maju, mandiri dan modern untuk terwujudnya Indonesia maju yang
+                                    berdaulat, mandiri, dan berkepribadian berlandaskan gotong royong”</p>
                             </div>
                             <div class="col-md-6">
                                 <h3>Misi</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum molestiae deserunt
-                                    blanditiis mollitia explicabo reiciendis ab quia, vero corrupti suscipit in
-                                    consequuntur illo eveniet itaque perspiciatis animi nam! Suscipit quas possimus in
-                                    ipsam ipsa repellendus, amet officia dolores? Ea odio fuga nostrum vel error cum
-                                    quos fugiat culpa sunt a, aspernatur aliquid, possimus accusantium aperiam vitae
-                                    suscipit quas fugit voluptatum quibusdam, dolorum unde! Totam iusto nemo, libero,
-                                    sint debitis iste ad minus dolorum ratione numquam quae modi corporis iure sed
-                                    magnam qui quis id saepe ab hic accusamus vitae illo. Similique, aut esse aliquam
-                                    consectetur incidunt atque possimus rem, necessitatibus accusantium perspiciatis
-                                    alias magni, fugiat facere! Architecto, ut? Voluptas accusantium voluptatem saepe
-                                    molestiae cupiditate cum soluta dolore, asperiores, tempora at dolorum sunt neque
-                                    consequatur optio nam ab. Excepturi vitae vel dolore, sapiente sed nisi consequatur
-                                    eveniet. Officiis mollitia omnis minima reiciendis, a quaerat dicta provident,
-                                    asperiores molestiae obcaecati, aut aliquid.</p>
+                                <p>Untuk mencapai visi yang dicapai, Kementerian Pertanian menetapkan misi sebagai
+                                    berikut:
+                                <p>
+                                    1. Mewujudkan ketahanan pangan.
+                                    <br>
+                                    2. Meningkatkan nilai tambah dan daya saing pertanian.
+                                    <br>
+                                    3. Meningkatkan kualitas SDM dan prasarana Kementerian Pertanian.
+                                </p>
+                                </p>
                             </div>
                         </div>
 
@@ -662,10 +732,6 @@
 
         <!-- Bantuan -->
         <script>
-        function Bantuan() {
-            $('#Bantuan').modal('show');
-        }
-
         function Image1() {
             $('#Image1').modal('show');
         }
